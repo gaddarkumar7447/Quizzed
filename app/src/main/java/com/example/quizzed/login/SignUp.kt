@@ -15,12 +15,13 @@ import com.google.firebase.auth.FirebaseAuth
 class SignUp : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var dataBinding : ActivitySignUpBinding
+    var flag = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         firebaseAuth = FirebaseAuth.getInstance()
-        dataBinding.btnSignUp.setOnClickListener(View.OnClickListener {signUpUser()})
-        dataBinding.btnLogin.setOnClickListener(View.OnClickListener {
+        dataBinding.btnLogin.setOnClickListener(View.OnClickListener {signUpUser()})
+        dataBinding.btnSignUp.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, LogIn::class.java))
             finish()
         })
@@ -44,9 +45,14 @@ class SignUp : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
+                else if (flag == 1){
+                    Toast.makeText(this, "Email and password already exits please logIn", Toast.LENGTH_SHORT).show()
+                }
                 else{
+                    flag = 1
                     Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
                 }
         })
+
     }
 }

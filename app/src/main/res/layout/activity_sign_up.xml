@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#e9e9e9"
         tools:context=".login.LogIn">
 
         <LinearLayout
@@ -48,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:hint="Email"
+                android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:ems="10"
@@ -56,6 +58,7 @@
             <EditText
                 android:background="@drawable/edit_text_bac"
                 android:id="@+id/etPassword"
+                android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,6 +72,7 @@
                 android:background="@drawable/edit_text_bac"
                 android:id="@+id/etConformpassword"
                 android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -84,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:textColor="@color/colorPrimaryButton"
-                android:text="Log In" />
+                android:text="SignUp" />
 
             <TextView
                 android:id="@+id/btnSignUp"
@@ -93,7 +97,7 @@
                 android:layout_marginTop="24dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryButtonBg"
-                android:text="Don't have an account? Signup" />
+                android:text="Already account? LogIn" />
         </LinearLayout>
 
         <ImageView
@@ -104,7 +108,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@drawable/ic_wave" />
+            android:background="@drawable/ic_wave" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
