@@ -39,7 +39,6 @@ class LogIn : AppCompatActivity() {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "LogIn Successful", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity::class.java))
-                        finish()
                     } else {
                         Toast.makeText(this, "Email and password invalid", Toast.LENGTH_SHORT).show()
                     }

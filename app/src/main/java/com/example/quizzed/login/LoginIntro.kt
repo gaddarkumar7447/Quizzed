@@ -22,7 +22,6 @@ class LoginIntro : AppCompatActivity() {
             gotoThisActivity("LogIn")
         })
         if (firebaseAuth.currentUser != null){
-            Toast.makeText(this, "User is already logIn", Toast.LENGTH_SHORT).show()
             gotoThisActivity("Main")
         }
     }
