@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         setUpAdapter()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun firebaseSetUp(){
         firestore = FirebaseFirestore.getInstance()
         val collectionRefrences = firestore.collection("quizzes")
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             }
             else{
                 Log.d("Data", "Data: "+value.toObjects(Quiz::class.java))
+                quiz.clear()
+                quiz.addAll(value.toObjects(Quiz::class.java))
+                Log.d("QuizData", "Data: $quiz")
+                adapter.notifyDataSetChanged()
             }
         }
     }
