@@ -14,6 +14,7 @@ import com.example.quizzed.R
 import com.example.quizzed.model.Quiz
 import com.example.quizzed.util.ColorPicker
 import com.example.quizzed.util.IconPicker
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class QuizAdapter(private val context : Context, private val quizzes: List<Quiz>) : RecyclerView.Adapter<QuizAdapter.ViewModel>() {
 
@@ -26,7 +27,14 @@ class QuizAdapter(private val context : Context, private val quizzes: List<Quiz>
         holder.cardContainer.setCardBackgroundColor(Color.parseColor(ColorPicker.getColorPicker()))
         holder.quizIcon.setImageResource(IconPicker.getCurrent())
         holder.cardContainer.setOnClickListener{
-            Toast.makeText(context, quizzes[position].title, Toast.LENGTH_SHORT).show()
+            val view : View = LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null)
+            val dialog = BottomSheetDialog(context)
+            view.findViewById<TextView>(R.id.tv_select_address).setOnClickListener{
+                dialog.dismiss()
+                Toast.makeText(context, quizzes[position].title, Toast.LENGTH_SHORT).show()
+            }
+            dialog.setContentView(view)
+            dialog.show()
         }
     }
 

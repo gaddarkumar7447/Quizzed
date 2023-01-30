@@ -1,4 +1,4 @@
-package com.example.quizzed.login
+package com.example.quizzed.autherization
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

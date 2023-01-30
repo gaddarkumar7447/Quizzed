@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:exported="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +16,7 @@
         android:theme="@style/Theme.Quizzed"
         tools:targetApi="31">
         <activity
-            android:name=".login.LoginIntro"
+            android:name=".autherization.LoginIntro"
             android:exported="true">
 
             <intent-filter>
@@ -29,14 +30,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.SignUp"
+            android:name=".autherization.SignUp"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.LogIn"
+            android:name=".autherization.LogIn"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

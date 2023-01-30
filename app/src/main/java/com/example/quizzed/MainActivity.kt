@@ -1,20 +1,36 @@
 package com.example.quizzed
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.view.Window
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.quizzed.adapter.QuizAdapter
 import com.example.quizzed.databinding.ActivityMainBinding
+import com.example.quizzed.model.Questions
 import com.example.quizzed.model.Quiz
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding : ActivityMainBinding
     private lateinit var troggle: ActionBarDrawerToggle
     private lateinit var adapter: QuizAdapter
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     private var quiz = mutableListOf<Quiz>()
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -24,12 +40,40 @@ class MainActivity : AppCompatActivity() {
         dataBinding.drawerLayout.addDrawerListener(troggle)
         troggle.syncState()
 
+
+        dataBinding.timePicker.setOnClickListener(View.OnClickListener {
+            val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
+            val dialog = BottomSheetDialog(this)
+            view.findViewById<TextView>(R.id.tv_select_address)?.setOnClickListener {
+                Log.d("TAG", "clicked")
+                dialog.dismiss()
+                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+            }
+            dialog.setContentView(view)
+            dialog.show()
+        })
+
+        firebaseSetUp()
         dummyData()
         setUpAdapter()
     }
 
+    private fun firebaseSetUp(){
+        firestore = FirebaseFirestore.getInstance()
+        val collectionRefrences = firestore.collection("quizzes")
+        collectionRefrences.addSnapshotListener { value, error ->
+            if (value == null || error != null){
+                Toast.makeText(this, "Some problem occurs", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+            else{
+                Log.d("Data", "Data: "+value.toObjects(Quiz::class.java))
+            }
+        }
+    }
+
     private fun dummyData() {
-        quiz.add(Quiz("1", "1"))
+        quiz.add(Quiz("1", "1", ))
         quiz.add(Quiz("1", "2"))
         quiz.add(Quiz("1", "3"))
         quiz.add(Quiz("1", "4"))
@@ -76,3 +120,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
+
+
