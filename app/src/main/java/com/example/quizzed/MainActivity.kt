@@ -1,6 +1,7 @@
 package com.example.quizzed
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -18,31 +19,49 @@ import com.example.quizzed.adapter.QuizAdapter
 import com.example.quizzed.databinding.ActivityMainBinding
 import com.example.quizzed.model.Questions
 import com.example.quizzed.model.Quiz
+import com.example.quizzed.question.QuestionShow
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var dataBinding : ActivityMainBinding
+    private lateinit var dataBinding: ActivityMainBinding
     private lateinit var troggle: ActionBarDrawerToggle
     private lateinit var adapter: QuizAdapter
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private var quiz = mutableListOf<Quiz>()
+
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(dataBinding.toolBar)
 
-        troggle = ActionBarDrawerToggle(this, dataBinding.drawerLayout, R.string.app_name, R.string.app_name)
+        troggle = ActionBarDrawerToggle(
+            this,
+            dataBinding.drawerLayout,
+            R.string.app_name,
+            R.string.app_name
+        )
         dataBinding.drawerLayout.addDrawerListener(troggle)
         troggle.syncState()
 
 
+        firebaseSetUp()
+        dummyData()
+        setUpAdapter()
+        setUpDatePicker()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun setUpDatePicker() {
         dataBinding.timePicker.setOnClickListener(View.OnClickListener {
-            val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
+            /*val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this)
             view.findViewById<TextView>(R.id.tv_select_address)?.setOnClickListener {
                 Log.d("TAG", "clicked")
@@ -50,35 +69,67 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
             }
             dialog.setContentView(view)
-            dialog.show()
+            dialog.show()*/
+            val datePicker = MaterialDatePicker.Builder.datePicker().build()
+            datePicker.show(supportFragmentManager, "datePicker")
+            datePicker.addOnPositiveButtonClickListener {
+                //Log.d("Date", "Date: ${datePicker.headerText}")
+                val dateFormate = SimpleDateFormat("dd/MM/yyyy")
+                val date: String = dateFormate.format(Date(it))
+                //Log.d("Date formate", "Date: $date")
+
+                val intent = Intent(this, QuestionShow::class.java)
+                intent.putExtra("DATE", date)
+                startActivity(intent)
+
+                /*val firestore = FirebaseFirestore.getInstance()
+                var bool  = 0
+
+                firestore.collection("quizzes").whereEqualTo("title", date).get().addOnSuccessListener {task ->
+                    if (task != null && !task.isEmpty){
+                        bool = 1
+                    }
+                }
+
+                if (bool == 1) {
+                    val intent = Intent(this, QuestionShow::class.java)
+                    intent.putExtra("DATE", date)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "No available quize $date", Toast.LENGTH_SHORT).show()
+                }*/
+
+            }
+            datePicker.addOnCancelListener {
+                //Log.d("Date", "Cancel: ${datePicker.headerText}")
+            }
+            datePicker.addOnNegativeButtonClickListener {
+                //Log.d("Date", "Negative: ${datePicker.headerText}")
+            }
         })
 
-        firebaseSetUp()
-        dummyData()
-        setUpAdapter()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun firebaseSetUp(){
+    private fun firebaseSetUp() {
         firestore = FirebaseFirestore.getInstance()
         val collectionRefrences = firestore.collection("quizzes")
         collectionRefrences.addSnapshotListener { value, error ->
-            if (value == null || error != null){
+            if (value == null || error != null) {
                 Toast.makeText(this, "Some problem occurs", Toast.LENGTH_SHORT).show()
                 return@addSnapshotListener
-            }
-            else{
-                Log.d("Data", "Data: "+value.toObjects(Quiz::class.java))
+            } else {
+                //Log.d("Data", "Data: " + value.toObjects(Quiz::class.java))
                 quiz.clear()
                 quiz.addAll(value.toObjects(Quiz::class.java))
-                Log.d("QuizData", "Data: $quiz")
+                //Log.d("QuizData", "Data: $quiz")
                 adapter.notifyDataSetChanged()
             }
         }
     }
 
     private fun dummyData() {
-        quiz.add(Quiz("1", "1", ))
+        quiz.add(Quiz("1", "1"))
         quiz.add(Quiz("1", "2"))
         quiz.add(Quiz("1", "3"))
         quiz.add(Quiz("1", "4"))
@@ -109,7 +160,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpAdapter() {
         adapter = QuizAdapter(this, quiz)
 
-        dataBinding.recyclerView.layoutManager = GridLayoutManager(this,2)
+        dataBinding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         dataBinding.recyclerView.hasFixedSize()
         dataBinding.recyclerView.adapter = adapter
     }
@@ -119,7 +170,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (troggle.onOptionsItemSelected(item)){
+        if (troggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)

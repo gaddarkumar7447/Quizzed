@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:visibility="visible"
+            android:visibility="invisible"
             android:id="@+id/btnPrevious"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <Button
-            android:visibility="visible"
+            android:visibility="invisible"
             android:id="@+id/btnNext"
             android:background="@drawable/button_primary"
             android:layout_width="0dp"

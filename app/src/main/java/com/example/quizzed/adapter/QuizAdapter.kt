@@ -24,12 +24,11 @@ class QuizAdapter(private val context : Context, private val quizzes: List<Quiz>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewModel {
         return ViewModel(LayoutInflater.from(context).inflate(R.layout.quizzed_item, parent, false))
     }
-
     override fun onBindViewHolder(holder: ViewModel, position: Int) {
         holder.quizTitle.text = quizzes[position].title
         holder.cardContainer.setCardBackgroundColor(Color.parseColor(ColorPicker.getColorPicker()))
         holder.quizIcon.setImageResource(IconPicker.getCurrent())
-        holder.cardContainer.setOnClickListener{
+        holder.cardContainer.setOnClickListener {
             /*val view : View = LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(context)
             view.findViewById<TextView>(R.id.tv_select_address).setOnClickListener{
@@ -38,8 +37,9 @@ class QuizAdapter(private val context : Context, private val quizzes: List<Quiz>
             }
             dialog.setContentView(view)
             dialog.show()*/
+
             val intent = Intent(context, QuestionShow::class.java)
-            intent.putExtra("title", quizzes[position].title)
+            intent.putExtra("DATE", quizzes[position].title)
             context.startActivity(intent)
         }
     }
