@@ -53,21 +53,22 @@
                     android:textColor="@android:color/white" />
             </LinearLayout>
 
-            <!--<androidx.recyclerview.widget.RecyclerView
-                android:layout_width="401dp"
-                android:layout_height="483dp"
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewAnswer"
+                android:layout_width="386dp"
+                android:layout_height="475dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10sp"
-                android:layout_marginLeft="10sp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintVertical_bias="0.053"
-                tools:ignore="NotSibling" />-->
+                tools:ignore="NotSibling" />
 
-            <ScrollView
+            <!--<ScrollView
                 android:layout_width="412dp"
                 android:layout_height="489dp"
                 android:background="#E1B2B2"
@@ -88,7 +89,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="HSHshh"
                     android:textSize="20sp" />
-            </ScrollView>
+            </ScrollView>-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

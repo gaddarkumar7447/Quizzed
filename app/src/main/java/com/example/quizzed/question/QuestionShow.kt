@@ -54,7 +54,7 @@ class QuestionShow : AppCompatActivity() {
             bindAdapter()
         }
         dataBinding.btnSubmit.setOnClickListener{
-            Log.d("User Answer", questions.toString())
+            //Log.d("User Answer", questions.toString())
 
             val intent = Intent(this,Result::class.java)
             val json : String = Gson().toJson(quizzes!![0])
@@ -62,7 +62,7 @@ class QuestionShow : AppCompatActivity() {
             startActivity(intent)
             finish()
             //setUpScore()
-            Log.d("Json data", "Json Data: $json")
+            //Log.d("Json data", "Json Data: $json")
         }
     }
 
@@ -89,9 +89,8 @@ class QuestionShow : AppCompatActivity() {
     private fun setUpFirebaseStore() {
         val date = intent.getStringExtra("DATE")
         //Log.d("Date1", "Date : $date")
-        val firebaseDate = FirebaseFirestore.getInstance().collection("quizzes").whereEqualTo("title", date).get()
 
-        Log.d("DateCurrent", "Date : $firebaseDate")
+        //Log.d("DateCurrent", "Date : $firebaseDate")
         if (date != null){
             val firestore = FirebaseFirestore.getInstance()
             firestore.collection("quizzes").whereEqualTo("title", date).get().addOnSuccessListener {
@@ -138,10 +137,4 @@ class QuestionShow : AppCompatActivity() {
             dataBinding.optionList.setHasFixedSize(true)
         }
     }
-
-
-
-
-
-
 }

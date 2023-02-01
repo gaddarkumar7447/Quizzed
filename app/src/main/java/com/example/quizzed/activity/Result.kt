@@ -17,8 +17,7 @@ import com.google.gson.Gson
 class Result : AppCompatActivity() {
     private lateinit var dataBinding : ActivityResultBinding
     private lateinit var quiz : Quiz
-    private lateinit var answerAdapter: AnswerAdapter
-    private lateinit var questions: Questions
+    private var question : MutableList<Questions> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_result)
@@ -29,21 +28,19 @@ class Result : AppCompatActivity() {
         val json = intent.getStringExtra("QUIZE")
         quiz = Gson().fromJson(json, Quiz::class.java)
 
-
-        var question : List<Questions> = listOf()
         for (entry in quiz.questions.entries){
-            question = listOf(entry.value)
-            Log.d("questionAll", "fromOfJson: $question")
-
+            question.addAll(listOf(entry.value))
+            //Log.d("questionAll", "fromOfJson: $question")
         }
         setAnswerView(question)
+        Log.d("TAG", "list: $question")
         calculateScore()
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setAnswerView(question: List<Questions>) {
-        val builder = StringBuilder("")
+        /*val builder = StringBuilder("")
         for (entry in quiz.questions.entries) {
             val question = entry.value
             builder.append("<font color'#FF000000'><b>Question: ${question.description}</b></font><br/><br/>")
@@ -53,21 +50,21 @@ class Result : AppCompatActivity() {
             dataBinding.answerText.text = Html.fromHtml(builder.toString(), Html.FROM_HTML_MODE_COMPACT);
         } else {
             dataBinding.answerText.text = Html.fromHtml(builder.toString());
-        }
+        }*/
 
 
-        /*val answerAdapter = AnswerAdapter(this, question)
+        val answerAdapter = AnswerAdapter(this, question)
         dataBinding.recyclerViewAnswer.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerViewAnswer.setHasFixedSize(true)
         dataBinding.recyclerViewAnswer.adapter = answerAdapter
-        answerAdapter.notifyDataSetChanged()*/
+        answerAdapter.notifyDataSetChanged()
     }
 
     private fun calculateScore() {
         var score = 0
         for (entry in quiz.questions.entries ) {
             val question = entry.value
-            Log.d("Question", "Question: $question")
+            //Log.d("Question", "Question: $question")
             if (question.userAnswer == question.answer){
                 score += 10
             }

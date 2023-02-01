@@ -3,6 +3,7 @@
     <item android:title="Follow Us"
         android:id="@+id/btnFollowUs" />
     <item android:title="Profile"
+        android:onClick="profile"
         android:id="@+id/btnProfile" />
     <item android:title="Rate Us"
         android:id="@+id/btnRateUs"/>

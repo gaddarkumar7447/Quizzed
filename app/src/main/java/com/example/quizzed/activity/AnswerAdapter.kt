@@ -17,6 +17,7 @@ class AnswerAdapter(val context: Context, private val questions: List<Questions>
 
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
         holder.ans.text = questions[position].answer
+        holder.que.text = questions[position].description
     }
 
     override fun getItemCount(): Int {
@@ -25,5 +26,6 @@ class AnswerAdapter(val context: Context, private val questions: List<Questions>
 
     class AnswerViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val ans : TextView = view.findViewById(R.id.answer)
+        val que : TextView = view.findViewById(R.id.question_Answer)
     }
 }

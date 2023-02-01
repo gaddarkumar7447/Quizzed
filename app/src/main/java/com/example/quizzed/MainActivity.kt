@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.quizzed.adapter.QuizAdapter
+import com.example.quizzed.autherization.LogIn
 import com.example.quizzed.databinding.ActivityMainBinding
 import com.example.quizzed.model.Questions
 import com.example.quizzed.model.Quiz
@@ -161,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         adapter = QuizAdapter(this, quiz)
 
         dataBinding.recyclerView.layoutManager = GridLayoutManager(this, 2)
-        dataBinding.recyclerView.hasFixedSize()
+        dataBinding.recyclerView.setHasFixedSize(true)
         dataBinding.recyclerView.adapter = adapter
     }
 
@@ -174,6 +176,18 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun profile(item: MenuItem) {
+        if (item.itemId == R.id.btnFollowUs){
+
+        }
+        else if (item.itemId == R.id.btnProfile){
+            startActivity(Intent(this, com.example.quizzed.activity.Profile::class.java))
+        }
+        else if (item.itemId == R.id.btnRateUs){
+
+        }
     }
 }
 
