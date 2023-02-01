@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="data"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +18,7 @@
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
-            android:text="What is your name"
+            android:text="@{data}"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:gravity="center"
@@ -79,7 +81,8 @@
             app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="@+id/description"
             app:layout_constraintStart_toStartOf="@+id/description"
-            app:layout_constraintTop_toBottomOf="@+id/description"/>
+            app:layout_constraintTop_toBottomOf="@+id/description">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
             android:visibility="invisible"
@@ -95,6 +98,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toRightOf="parent"  />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="No Question found"
+                android:textSize="30sp"
+                android:id="@+id/noQuestionFound"
+                android:textColor="@color/black"
+                android:visibility="invisible"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
 
 

@@ -1,6 +1,7 @@
 package com.example.quizzed.question
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,8 @@ import com.example.quizzed.databinding.ActivityQuestionShowBinding
 import com.example.quizzed.model.Questions
 import com.example.quizzed.model.Quiz
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
+import com.example.quizzed.activity.Result
 
 class QuestionShow : AppCompatActivity() {
     lateinit var adapter: OptionAdapter
@@ -20,13 +23,19 @@ class QuestionShow : AppCompatActivity() {
     private var quizzes : MutableList<Quiz>? = null
     private var questions : MutableMap<String, Questions>? = null
     private var index = 1
+    private var score = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_question_show)
 
+        val date = intent.getStringExtra("DATE")
         //bindAdapter()
         //setQuizeQuestion()
+
+        // for no question
+        dataBinding.data = "No question found this date $date"
+
         setUpFirebaseStore()
         setUpButtonEvent()
     }
@@ -46,7 +55,34 @@ class QuestionShow : AppCompatActivity() {
         }
         dataBinding.btnSubmit.setOnClickListener{
             Log.d("User Answer", questions.toString())
+
+            val intent = Intent(this,Result::class.java)
+            val json : String = Gson().toJson(quizzes!![0])
+            intent.putExtra("QUIZE",json)
+            startActivity(intent)
             finish()
+            //setUpScore()
+            Log.d("Json data", "Json Data: $json")
+        }
+    }
+
+    private fun setUpScore() {
+        var score = 0
+        for (entry in questions!!.entries){
+            val que = entry.value
+            if (que.userAnswer == que.answer){
+                score++
+            }
+        }
+        Toast.makeText(this, score.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun checkAnswer() {
+        val questions = Questions()
+        val userAnswer = questions.userAnswer
+        val currect = questions.answer
+        if (userAnswer == currect){
+            score++
         }
     }
 
@@ -102,6 +138,8 @@ class QuestionShow : AppCompatActivity() {
             dataBinding.optionList.setHasFixedSize(true)
         }
     }
+
+
 
 
 

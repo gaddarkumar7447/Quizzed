@@ -2,6 +2,7 @@ package com.example.quizzed.question
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import com.example.quizzed.R
 import com.example.quizzed.model.Questions
 
 class OptionAdapter (val context : Context, private val questions: Questions) : RecyclerView.Adapter<OptionAdapter.QuestionItem>(){
-
     private var options : List<String> = listOf(questions.option1, questions.option2, questions.option3, questions.option4)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionItem {
@@ -39,5 +39,4 @@ class OptionAdapter (val context : Context, private val questions: Questions) : 
     class QuestionItem(view: View) : RecyclerView.ViewHolder(view) {
         val optionView : TextView = view.findViewById(R.id.questionOption)
     }
-
 }

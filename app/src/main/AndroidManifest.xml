@@ -16,6 +16,20 @@
         android:theme="@style/Theme.Quizzed"
         tools:targetApi="31">
         <activity
+            android:name=".activity.Profile"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.Result"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".question.QuestionShow"
             android:exported="false">
             <meta-data
